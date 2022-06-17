@@ -1,0 +1,134 @@
+@model List<ProductModel>
+@using App.Components
+@{
+    List<CategoryProduct> categories = ViewBag.categories as List<CategoryProduct>;
+    var category = ViewBag.category as CategoryProduct;
+    ViewData["Title"] = (category != null) ? category.Title : "Sản phẩm trong tất cả các danh mục";
+}
+
+
+@section Sidebar{
+@await Component.InvokeAsync("App.Components.CategoryProductSidebar",
+new CategoryProductSidebar.CategoryProductSidebarData()
+{
+Categories = categories,
+Lever = 0,
+CategorySlug = ViewBag.categoryslug
+})
+}
+
+
+@* <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="~/">Home</a></li>
+    @if (category != null)
+    {
+    var listParent = category.ListParent();
+    foreach (var parent in listParent)
+    {
+    <li class="breadcrumb-item">
+    <a asp-action="index" asp-controller="ViewProduct" asp-route-categoryslug="@parent.Slug">@parent.Title</a>
+    </li>
+    }
+    <li class="breadcrumb-item active" aria-current="page">@category.Title</li>
+    }
+    </ol>
+    </nav>
+
+    <h1>@ViewData["Title"]</h1>
+    @if (category != null)
+    {
+    <p>@Html.Raw(category.Description)</p>
+    }
+    else
+    {
+    <p>Sản phẩm trong tất cả các danh mục...</p>
+    }
+    <hr> *@
+
+
+
+
+
+<div class="home-product">
+    <div class="row sm-gutter">
+
+        @foreach (var product in Model)
+        {
+            var srcImg = "/contents/NoPhoto.png";
+            if (product.Photos.Any())
+            {
+                srcImg = $"/contents/Products/{product.Photos.FirstOrDefault().FileName}";
+            }
+
+            @* <div class="card mb-3" style="width: 32%">
+                <img src="@srcImg" class="card-img-top" alt="...">
+                <div class="card-body">
+                <h5 class="card-title">@product.Title</h5>
+                <p class="card-text">@Html.Raw(product.Description)</p>
+                <p>
+                <strong class="text-danger">
+                @product.ProductCategoryProducts.FirstOrDefault()?.Category.Title
+                </strong>
+                </p>
+                <p>Giá:
+                <strong>
+                @product.Price
+                </strong>
+                </p>
+                </div>
+                <div class="card-body">
+                <a class="card-link" asp-controller="ViewProduct" asp-action="Detail" asp-route-productslug="@product.Slug">Xem
+                chi tiết</a>
+                <a asp-action="AddToCart" asp-route-productid="@product.ProductId" class="btn btn-primary ml-4">Đặt hàng</a>
+                </div>
+                </div> *@
+
+            <!-- Product item -->
+            <div class="col l-2-4 m-4 c-6">
+                <a class="home-product-item card-link" asp-controller="ViewProduct" asp-action="Detail"
+                asp-route-productslug="@product.Slug">
+                    <div class="home-product-item__img" style="background-image:
+                                    url(@srcImg);">
+                        <h4 class="home-product-item__name">@product.Title</h4>
+                        <div class="home-product-item__price">
+                            <span class="home-product-item__price-old">450.000đ</span>
+                            <span class="home-product-item__price-current">@product.Price</span>
+                        </div>
+                        <div class="home-product-item__action">
+                            <span class="home-product-item__like home-product-item__like--liked">
+                                <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
+                                <i class="home-product-item__like-icon-fill fa-solid fa-heart"></i>
+                            </span>
+                            <div class="home-product-item__rating">
+                                <i class="home-product-item__start--gold fa-solid fa-star"></i>
+                                <i class="home-product-item__start--gold fa-solid fa-star"></i>
+                                <i class="home-product-item__start--gold fa-solid fa-star"></i>
+                                <i class="home-product-item__start--gold fa-solid fa-star"></i>
+                                <i class="home-product-item__start--gold fa-solid fa-star"></i>
+                            </div>
+                            <span class="home-product-item__sold">551 đã bán</span>
+                        </div>
+                        <div class="home-product-item__origin">
+                            <span class="home-product-item__origin-brand"></span>
+                            <span class="home-product-item__origin-name">Hà Nội</span>
+                        </div>
+                        <div class="home-product-item__favourite">
+                            <i class="fa-solid fa-check"></i>
+                            <span>Yêu thích</span>
+                        </div>
+                        <div class="home-product-item__sale-off">
+                            <span class="home-product-item__sale-off-percent">34%</span>
+                            <span class="home-product-item__sale-off-label">GIẢM</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        }
+    </div>
+</div>
+
+
+
+<partial name="_PagingProduct" model="@ViewBag.pagingModel"></partial>

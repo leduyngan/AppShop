@@ -1,0 +1,134 @@
+@using Microsoft.AspNetCore.Identity
+@using App.Areas.Identity.Models.AccountViewModels
+@inject SignInManager<AppUser> _signInManager
+@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+    var thongBao = TempData["ErrorMessage"];
+    Layout = "_LoginLayout.cshtml";
+}
+<style>
+    .bg-login-image {
+        background: url(https://localhost:5001/contents/login2.gif?_t=1646412611);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-color: black;
+    }
+</style>
+
+@if (TempData.ContainsKey("ErrorMessage"))
+{
+    <partial name="/Areas/Identity/Pages/Account/_StatusMessage.cshtml" model="thongBao" />
+}
+
+<!-- Outer Row -->
+<div class="row justify-content-center">
+
+    <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                    <div class="col-lg-6">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Đăng nhập!</h1>
+                            </div>
+                            <form class="user" id="account" method="post" asp-action="Login" asp-controller="account"
+                                asp-area="Identity">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+
+
+                                <div class="form-group">
+                                    <input asp-for="UserNameOrEmail" class="form-control form-control-user" />
+                                    <span asp-validation-for="UserNameOrEmail" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <input asp-for="Password" class="form-control form-control-user" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox small">
+                                        <input class="custom-control-input" asp-for="RememberMe">
+                                        <label class="custom-control-label" asp-for="RememberMe">@Html.DisplayNameFor(m
+                                            => m.RememberMe)</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-user btn-block">Đăng nhập</button>
+                                <hr>
+
+
+                            </form>
+
+                            @{
+                                var externalLogins = (await
+            _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+                                if ((externalLogins?.Count ?? 0) == 0)
+                                { }
+                                else
+                                {
+                                    <form id="external-account" asp-area="Identity" asp-controller="account"
+                                asp-action="ExternalLogin" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post"
+                                class="form-horizontal user">
+                                        <div>
+                                            <p>
+                                                @foreach (var provider in externalLogins)
+                                                {
+                                                    var cssClass = "btn-user btn-block";
+                                                    var icon = "";
+                                                    if (provider.Name == "Google")
+                                                    {
+                                                        cssClass = "btn btn-google btn-user btn-block";
+                                                        icon = "<i class=\"fab fa-google\"></i> ";
+                                                    }
+                                                    else if (provider.Name == "Facebook")
+                                                    {
+                                                        cssClass = "btn btn-facebook btn-user btn-block";
+                                                        icon = "<i class=\"fab fa-facebook-f\"></i> ";
+                                                    }
+                                                    <button type="submit" class="@cssClass" name="provider" value="@provider.Name"
+                                                title="Sử dụng @provider.DisplayName account">@Html.Raw(icon) &nbsp
+                                                        Đăng nhập với
+                                                        @provider.DisplayName</button>
+                                                }
+                                            </p>
+                                        </div>
+                                    </form>
+                                }
+                            }
+
+
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" asp-area="Identity" asp-controller="account"
+                                    asp-action="ForgotPassword">Quên Mật Khẩu?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" asp-action="Register" asp-controller="account" asp-area="Identity">Đăng
+                                    ký tài khoản mơi</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" asp-action="ResendEmailConfirmation" asp-controller="account"
+                                    asp-area="Identity">Gửi lại email xác thực</a>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

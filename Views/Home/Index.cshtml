@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+}
+<partial name="_StatusMessage" model=@ViewData["StatusMessage"] />
+<div class="text-center">
+    <h1 class="display-4">Xin Chào</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@*
+    <textarea id="summernoteEditor"></textarea>
+    <textarea id="summernoteEditor2"></textarea>
+    @{
+    var summernote = new Summernote("#summernoteEditor", true);
+    var summernote2 = new Summernote("#summernoteEditor2", false);
+    }
+    <partial name="_Summernote" model="@summernote" />
+    <partial name="_Summernote" model="@summernote2" /> *@

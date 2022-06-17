@@ -1,0 +1,23 @@
+@using App.Menu
+@inject AdminSidebarService _AdminSidebarService
+@model App.Models.Blog.Post
+
+@{
+    ViewData["Title"] = "Xóa bài viết";
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h3>Có chắc chắn xóa bài viết?</h3>
+<div>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="PostId" />
+        <input type="submit" value="Xóa" class="btn btn-danger" /> |
+        <a asp-action="Index">Danh sách bài viết</a>
+    </form>
+</div>
+@{
+    _AdminSidebarService.SetActive("Post", "Index", "Blog");
+}
+@section Sidebar
+{
+@Html.Raw(_AdminSidebarService.renderHtml())
+}

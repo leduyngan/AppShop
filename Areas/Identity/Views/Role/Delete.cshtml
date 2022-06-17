@@ -1,0 +1,34 @@
+﻿@using App.Menu
+@inject AdminSidebarService _AdminSidebarService
+@using Microsoft.AspNetCore.Identity
+@model IdentityRole
+@{
+    ViewData["Title"] = "Cập nhật role";
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>@ViewData["Title"]</h2>
+<partial name="_StatusMessage" />
+<hr>
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" asp-action="Delete">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="Id" value="@Model.Id">
+            <p>Bạn có chắc chắn xóa <strong>@Model.Name</strong></p>
+            <div class="form-group">
+                <input type="submit" value="Đồng ý" class="btn btn-danger" />
+                <a class="btn btn-primary" asp-action="Index">Danh sách các role</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@{
+    _AdminSidebarService.SetActive("Role", "index", "Identity");
+}
+@section Sidebar
+{
+@Html.Raw(_AdminSidebarService.renderHtml())
+}

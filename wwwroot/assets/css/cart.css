@@ -1,0 +1,245 @@
+.cart__title {
+    background-color: var(--white-color);
+}
+
+.padding-bottom {
+    padding-bottom: 30px;
+}
+
+.cart__title {
+    padding: 10px 0;
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.cart__title- {
+    margin-left: 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.cart__title-checkbox_padding {
+    padding-right: 20px;
+}
+
+.cart__title-detail-checkbox {
+
+    width: 1.2em;
+    height: 1.2em;
+    background-color: white;
+    border-radius: 2px;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    font-size: 1.5rem;
+
+}
+
+.cart__title-detail-checkbox:checked {
+    background-color: var(--primary-color);
+}
+
+.cart__title-detail-checkbox:before {
+    position: absolute;
+    content: "";
+    height: 5px;
+    width: 9px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg);
+    left: 3px;
+    top: 3px;
+}
+
+.cart__title-detail {
+    color: #888;
+    text-align: center;
+    margin: 10px 0;
+}
+
+
+.cart__list {
+    margin: 20px 0;
+    width: 100%;
+    background-color: var(--white-color);
+
+}
+
+.cart__list__item {
+    margin: 20px 20px;
+    border: 1px solid rgba(0, 0, 0, .09);
+}
+
+.cart-item {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.cart-item:first-child {
+    margin-top: 40px;
+}
+
+.cart-item:last-child::after {
+    display: none;
+}
+
+.cart-item::after {
+    content: "";
+    position: absolute;
+    border-top: 1px solid rgba(0, 0, 0, .09);
+    top: 126%;
+    left: 45px;
+    right: 26px;
+}
+
+.cart__list__item__ {
+    display: flex;
+}
+
+.cart__list__item__input {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    padding-left: 20px;
+
+}
+
+.cart__list-img {
+    flex: 1;
+    display: flex;
+}
+
+.cart__list-item-img {
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+}
+
+.cart__list-img-a {
+    flex: 1;
+    margin-left: 8px;
+    padding-top: 8px;
+}
+
+.cart__list-img-a a {
+
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: var(--text-color);
+    overflow: hidden;
+    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+
+}
+
+
+.cart__list-detail {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+
+}
+
+.cart__list-detail-money {
+    color: var(--primary-color);
+}
+
+.cart__list-detail-delete a {
+    border: none;
+    background-color: var(--white-color);
+}
+
+.cart__list-detail- {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+.cart__list-detail-similarProduct-a {
+    display: flex;
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+.cart__list-detail-similarProduct-spanText {
+    text-align: center;
+}
+
+.cart__list-detail-similarProduct-spanIcon {
+    margin-left: 5px;
+}
+
+.cart__pay {
+    width: 100%;
+    height: 60px;
+    background-color: var(--white-color);
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.8rem;
+    color: var(--text-color);
+}
+
+.cart__pay__select {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.cart__pay__select-checkbox {
+    padding-right: 20px;
+}
+
+.cart__pay__select-all {
+    padding-right: 20px;
+}
+
+.cart__pay__select-delete button {
+    background-color: var(--white-color);
+    border: none;
+}
+
+.cart__pay__checkout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.cart__pay__checkout-total {
+    margin-right: 10px;
+}
+
+.cart__pay__checkout-money {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    font-weight: 400;
+    padding-right: 20px;
+}
+
+.cart__pay__checkout-buy button {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 3px;
+    min-width: 200px;
+    color: var(--white-color);
+    height: 40px;
+}
+
+.cart__pay__checkout-buy:hover button {
+    background-color: #f05d40;
+    ;
+}

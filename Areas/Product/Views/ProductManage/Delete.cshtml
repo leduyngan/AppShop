@@ -1,0 +1,24 @@
+@model App.Models.Product.ProductModel
+@using App.Menu
+@inject AdminSidebarService _AdminSidebarService
+@{
+    ViewData["Title"] = "Xóa sản phẩm";
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<h3>Có chắc chắn xóa sản phẩm?</h3>
+<div>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ProductId" />
+        <input type="submit" value="Xóa" class="btn btn-danger" /> |
+        <a asp-action="Index">Danh sách sản phẩm</a>
+    </form>
+</div>
+@{
+    _AdminSidebarService.SetActive("ProductManage", "Index", "Product");
+}
+@section Sidebar
+{
+@Html.Raw(_AdminSidebarService.renderHtml())
+}

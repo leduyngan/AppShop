@@ -1,0 +1,45 @@
+@using App.Areas.Identity.Views.Manage
+@using App.Areas.Identity.Models.ManageViewNodels
+@model EmailChangeViewModel
+@{
+    ViewData["Title"] = "Quản lý email";
+    ViewData["ActivePage"] = ManageNavPages.Email;
+}
+
+<h4>@ViewData["Title"]</h4>
+<div class="row">
+    <div class="col-md-6">
+        <form id="email-form" method="post" asp-area="Identity" asp-controller="Manage" asp-action="EmailChange">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                @if (Model.EmailIsConfirmed)
+                {
+                    <div class="input-group">
+                        <input asp-for="Email" class="form-control" disabled />
+                        <div class="input-group-append">
+                            <span class="input-group-text text-success font-weight-bold">✓</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @* <input asp-for="Email" class="form-control" disabled />
+                        <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail"
+                        class="btn btn-link">Send verification email</button> *@
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="NewEmail"></label>
+                <input asp-for="NewEmail" class="form-control" />
+                <span asp-validation-for="NewEmail" class="text-danger"></span>
+            </div>
+            <button id="change-email-button" type="submit" class="btn btn-primary">Đổi
+                email</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

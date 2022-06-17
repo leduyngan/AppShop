@@ -1,0 +1,33 @@
+{
+  "name": "appmvc.net",
+  "version": "1.0.0",
+  "description": "- Là một lớp kế thừa lớp Controller: Microsoft.AspNetCore.Mvc.Controller\r - Action trong controller là một phương thức public(không được static)\r - Action trả về bất kỳ dữ liệu nào, thường là IActionResult\r - Các dịch vụ inject vào controller qua hàm tạo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leduyngan/AppMvc.Net.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leduyngan/AppMvc.Net/issues"
+  },
+  "homepage": "https://github.com/leduyngan/AppMvc.Net#readme",
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-less": "^5.0.0",
+    "gulp-postcss": "^9.0.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-uglify": "^3.0.2",
+    "node-sass": "^7.0.1",
+    "postcss": "^8.4.5",
+    "rimraf": "^3.0.2",
+    "sass": "^1.48.0"
+  }
+}

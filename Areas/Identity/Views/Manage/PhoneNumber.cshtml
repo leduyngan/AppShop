@@ -1,0 +1,48 @@
+﻿@using App.Areas.Identity.Models.ManageViewNodels
+@model PhoneNumberViewModel
+@{
+
+    ViewData["Title"] = "Số điện thoại";
+}
+<h4>Quản lý @ViewData["Title"]</h4>
+<div class="row">
+    <div class="col-md-6">
+
+
+        @if (Model.PhoneNumber != null)
+        {
+            <form method="post">
+                <div asp-validation-summary="All">
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber"></label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    @* <a class="btn btn-primary">Đổi số điện Thoại</a> *@
+                    <button type="submit" class="btn btn-primary" asp-action="AddPhoneNumber">Đổi số điện Thoại</button>
+                    <button type="submit" class="btn btn-danger" asp-action="RemovePhoneNumber">Xóa số điện Thoại</button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <form method="post">
+                <div asp-validation-summary="All"></div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary" asp-action="AddPhoneNumber">Thêm mới</button>
+            </form>
+        }
+
+
+
+
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

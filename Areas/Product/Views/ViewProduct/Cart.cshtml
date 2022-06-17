@@ -1,0 +1,252 @@
+@using App.Areas.Product.Models
+
+@model List<CartItem>
+@{
+    Layout = "_LayoutProduct";
+}
+
+@if (Model.Count > 0)
+{
+    decimal total = 0;
+
+
+    <div class="app__container padding-bottom app__content">
+        <div class="grid wide ">
+            <div class="row cart__title ">
+                <div class="col l-40-">
+                    <div class="cart__title-">
+                        <div class="cart__title-checkbox_padding"> <input class="cart__title-detail-checkbox"
+                            type="checkbox" id="" name="" value=""></div>
+                        <div>Sản Phẩm</div>
+                    </div>
+                </div>
+                <div class="col l-60-">
+                    <div class="row">
+                        <div class="col l-3 cart__title-detail">
+                            Đơn Giá
+                        </div>
+                        <div class="col l-3 cart__title-detail">
+                            Số Lượng
+                        </div>
+                        <div class="col l-3 cart__title-detail">
+                            Số Tiền
+                        </div>
+                        <div class="col l-3 cart__title-detail">
+                            Thao Tác
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="cart__list">
+                    <div class="cart__list__item">
+                        @foreach (var cartitem in Model)
+                        {
+
+                            var thanhtien = cartitem.quantity * cartitem.product.Price;
+
+
+
+                            total += thanhtien;
+
+                            <div class="cart-item">
+                                <div class="row">
+                                    <div class="col l-40-">
+                                        <div class="cart__list__item__">
+                                            <div class="cart__list__item__input">
+                                                <input class="cart__title-detail-checkbox" type="checkbox" id="" name=""
+                                            value="">
+                                            </div>
+                                            <div class="cart__list-img">
+                                                @if (cartitem.photo.Any())
+                                                {
+
+                                                    <div class="cart__list-item-img"
+                                            style="background-image: url('/contents/Products/@cartitem.photo');">
+                                                    </div>
+                                                }
+
+                                                <div class="cart__list-img-a">
+                                                    <a href="">
+                                                        @cartitem.product.Title
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col l-60-">
+                                        <div class="row">
+                                            <div class="col l-3">
+                                                <div class="cart__list-detail">
+                                                    <div class="cart__list-detail-price">
+                                                        @(cartitem.product.Price.ToString("n0"))</div>
+                                                </div>
+                                            </div>
+                                            <div class="col l-3">
+                                                <div class="cart__list-detail">
+                                                    <div class="cart__list-detail-amount">
+                                                        <div class="info_other-list-change-card">
+                                                            <div class="info_other-list-border">
+                                                                <button class="info_other-list-btn">
+                                                                    <i class="fa-solid fa-minus"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="info_other-list-border">
+                                                                <input type="text" class="info_other-list-numberInCard"
+                                                            placeholder="1">
+                                                            </div>
+                                                            <div class="info_other-list-border">
+
+                                                                <button class="info_other-list-btn"
+                                                            data-productid="@cartitem.product.ProductId">
+                                                                    <i class="fa-solid fa-plus"></i>
+                                                                </button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col l-3">
+                                                <div class="cart__list-detail">
+                                                    <div class="cart__list-detail-money">@(thanhtien.ToString("n0"))</div>
+                                                </div>
+                                            </div>
+                                            <div class="col l-3 ">
+                                                <div class="cart__list-detail">
+                                                    <div class="cart__list-detail-">
+                                                        <div class="cart__list-detail-delete">
+                                                            @* <button>Xóa</button> *@
+                                                            <a asp-route="removecart"
+                                                        asp-route-productid="@cartitem.product.ProductId"
+                                                        class="btn btn-danger">Xóa</a>
+                                                        </div>
+                                                        <div class="cart__list-detail-similarProduct">
+                                                            <a class="cart__list-detail-similarProduct-a" href="">
+                                                                <span class="cart__list-detail-similarProduct-spanText">
+                                                                    Tìm sản phẩm tương tự
+                                                                </span>
+                                                                <span class="cart__list-detail-similarProduct-spanIcon">
+                                                                    <i class="fas fa-caret-down"></i>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+                <div class="cart__pay">
+                    <div class="cart__pay__select">
+                        <div class="cart__pay__select-checkbox">
+                            <input class="cart__title-detail-checkbox" type="checkbox" id="" name="" value="">
+                        </div>
+                        <div class="cart__pay__select-all">
+                            Chọn tất cả (<span>1</span>)
+                        </div>
+                        <div class="cart__pay__select-delete">
+                            <button>Xóa</button>
+                        </div>
+                    </div>
+                    <div class="cart__pay__checkout">
+                        <div class="cart__pay__checkout-total">
+                            Tổng thanh toán(<span>1</span> sản phẩm):
+                        </div>
+                        <div class="cart__pay__checkout-money">
+                            @(total.ToString("n0"))<span>₫</span>
+                        </div>
+                        <div class="cart__pay__checkout-buy">
+                            <button>Mua Hàng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    @* <table class="table">
+        <tr>
+        <th>#</th>
+        <th>Sản phẩm</th>
+        <th>Giá</th>
+        <th>Số lượng</th>
+        <th>Thành tiền</th>
+        <th></th>
+        </tr>
+        @foreach (var cartitem in Model)
+        {
+        var thanhtien = cartitem.quantity * cartitem.product.Price;
+        total += thanhtien;
+
+        <tr>
+        <td>@(stt++)</td>
+        <td>@cartitem.product.Title</td>
+        <td>@(cartitem.product.Price.ToString("n0"))</td>
+        <td><input asp-for="@cartitem.quantity" id="@($"quantity-{cartitem.product.ProductId}")" /></td>
+        <td>@(thanhtien.ToString("n0"))</td>
+        <td>
+        <button class="btn btn-success updatecartitem" data-productid="@cartitem.product.ProductId">Cập
+        nhật</button>
+        <a asp-route="removecart" asp-route-productid="@cartitem.product.ProductId" class="btn btn-danger">Xóa</a>
+        </td>
+        </tr>
+        }
+        <tr>
+        <td colspan="4" class="text-right">Tổng tiền</td>
+        <td>@(total.ToString("n0"))</td>
+        <td></td>
+        </tr>
+        </table>
+
+        <a asp-controller="ViewProduct" asp-action="Checkout" class="btn btn-success">Gửi đơn hàng</a>
+    *@
+
+
+
+
+
+
+
+
+
+
+
+
+    @* @section Scripts {
+        <script>
+        $(document).ready(function () {
+        $(".updatecartitem").click(function (event) {
+        event.preventDefault();
+        var productid = $(this).attr("data-productid");
+        var quantity = $("#quantity-" + productid).val();
+        $.ajax({
+        type: "POST",
+        url: "@Url.RouteUrl("updatecart")",
+        data: {
+        productid: productid,
+        quantity: quantity
+        },
+        success: function (result) {
+        window.location.href = "@Url.RouteUrl("cart")";
+        }
+        });
+        });
+        });
+        </script>
+        } *@
+
+}
+else
+{
+    <p class="alert alert-danger">Giỏ hàng trống</p>
+}

@@ -1,0 +1,231 @@
+@model ProductModel
+@using App.Components
+@{
+    Layout = "_LayoutProduct";
+}
+@{
+    List<CategoryProduct> categories = ViewBag.categories as List<CategoryProduct>;
+    CategoryProduct category = ViewBag.category as CategoryProduct;
+    ViewData["Title"] = Model.Title;
+    IQueryable<ProductModel> otherProducts = ViewBag.otherProducts as IQueryable<ProductModel>;
+}
+@* <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="~/">Home</a></li>
+    @if (category != null)
+    {
+    var listParent = category.ListParent();
+    foreach (var parent in listParent)
+    {
+    <li class="breadcrumb-item"><a asp-action="index" asp-controller="ViewProduct"
+    asp-route-categoryslug="@parent.Slug">@parent.Title</a></li>
+    }
+    <li class="breadcrumb-item active" aria-current="page">@category.Title</li>
+    }
+    </ol>
+    </nav> *@
+@* <div class="detailpost">
+    <h1>@Model.Title</h1>
+    <div class="sapo">
+    @Model.Description
+    </div>
+    <div>
+    <p>
+    Giá: <strong>@Model.Price</strong>
+    <a asp-action="AddToCart" asp-route-productid="@Model.ProductId" class="btn btn-danger">Đặt hàng</a>
+    </p>
+    </div>
+    @if (Model.Photos.Any())
+    {
+    <div class="d-flex flex-wrap">
+    @foreach (var photo in Model.Photos)
+    {
+    <img class="w-50" src="/contents/Products/@photo.FileName" />
+    }
+    </div>
+    }
+
+    <hr>
+    @Html.Raw(Model.Content)
+    </div> *@
+
+
+
+
+
+
+@* @section Sidebar{
+    @await Component.InvokeAsync("App.Components.CategoryProductSidebar",
+    new CategoryProductSidebar.CategoryProductSidebarData()
+    {
+    Categories = categories,
+    Lever = 0,
+    CategorySlug = category.Slug
+    })
+    <ul class="list-group">
+    @foreach (var product in otherProducts)
+    {
+    <li class="list-group-item">
+    <a asp-controller="ViewProduct" asp-action="Detail" asp-route-productslug="@product.Slug">
+    @product.Title
+    </a>
+    </li>
+    }
+    </ul>
+    } *@
+
+
+
+<div class="app__container app__content padding-bottom">
+    <div class="grid wide">
+        <div class="row img">
+            <div class="col l-40-">
+                <div class="row">
+                    <div class="margin_top">
+                    </div>
+                    <div class="col l-12">
+                        @if (Model.Photos.Any())
+                        {
+                            var listPhotos = (from p in Model.Photos select p).Take(5);
+                            var firstPhotos = listPhotos.FirstOrDefault();
+                            <div class="main-img"
+                            style="background-image: url('/contents/Products/@firstPhotos.FileName');">
+                            </div>
+                            <div class="row sm-gutter sub-img">
+                                @foreach (var photo in listPhotos)
+                                {
+                                    <div class="col l-2-4">
+                                        <div class="sub-img_item"
+                                    style="background-image: url('/contents/Products/@photo.FileName');">
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col l-60-">
+                <div class="margin_top"></div>
+                <div class="info">
+                    <div class="info__title">
+                        @Model.Title
+                    </div>
+                    <div class="info__rate">
+                        <div class="info__rate__detail_1">
+                            <div class="info__rate__detail-numberStar">
+                                5.0
+                            </div>
+                            <div class="info__rate__detail-star">
+                                <i class="home-product-item__start--rate fa-solid fa-star"></i>
+                                <i class="home-product-item__start--rate fa-solid fa-star"></i>
+                                <i class="home-product-item__start--rate fa-solid fa-star"></i>
+                                <i class="home-product-item__start--rate fa-solid fa-star"></i>
+                                <i class="home-product-item__start--rate fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="info__rate__detail-number">
+                            <div class="info__rate__detail-number-nu">50</div>
+                            <div class="info__rate__detail-number-text">Đánh Giá</div>
+                        </div>
+                        <div class="info__rate__detail-sold">
+                            <div class="info__rate__detail-sold-number">400</div>
+                            <div class="info__rate__detail-sold-text">Đã Bán</div>
+                        </div>
+                    </div>
+
+                    <div class="info_price">
+                        <span class="info_price_unit">₫</span>@Model.Price
+                    </div>
+                    <div class="info_other">
+                        <div class="info_other_transport">
+                            <label class="info_other-lable">Vận chuyển</label>
+                            <div class="info_other-list">
+                                <div class="info_other_transport-icon">
+                                    <i class="fa-solid fa-truck-arrow-right"></i>
+                                </div>
+                                <div class="info_other_transport-detail_">
+                                    <div class="info_other_transport-detail_to">
+                                        <div class="info_other_transport-detail_to_">Vận chuyển tới</div>
+                                        <div class="info_other_transport-detail_to_place">Huyện Ba Vì</div>
+                                    </div>
+                                    <div class="info_other_transport-detail_to">
+                                        <div class="info_other_transport-detail_to_">Phí vận chuyển</div>
+                                        <div class="info_other_transport-detail_to_place">10.000đ</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info_other_type">
+                            <label class="info_other-lable">Loại hàng</label>
+                            <div class="info_other-list">
+                                <div class="info_other_type-item">Rằn ri</div>
+                                <div class="info_other_type-item">Đen</div>
+                                <div class="info_other_type-item">Đỏ</div>
+                                <div class="info_other_type-item">Xanh blue</div>
+                            </div>
+                        </div>
+                        <div class="info_other_amount">
+                            <label class="info_other-lable">Số lượng</label>
+                            <div class="info_other-list">
+                                <div class="info_other-list-change-card">
+                                    <div class="info_other-list-border">
+                                        <button class="info_other-list-btn">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="info_other-list-border">
+                                        <input type="text" class="info_other-list-numberInCard" placeholder="1">
+                                    </div>
+                                    <div class="info_other-list-border">
+                                        <button class="info_other-list-btn">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div class="info_other-list-remain">
+                                    <div class="info_other-list-remain-number">
+                                        73
+                                    </div>
+                                    sản phẩm có sẵn
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info__buy">
+                        <div class="info__buy-addToCart-hover">
+                            <button class="info__buy-addToCart">
+                                <i class="fa-solid fa-cart-plus"></i>
+                                <a asp-action="AddToCart" asp-route-productid="@Model.ProductId"
+                                    class="btn btn-danger">Thêm vào giỏ hàng</a>
+
+                            </button>
+                        </div>
+                        <div class="info__buy-addToCart-hover">
+                            <button class="info__buy-buyNow">
+                                Mua ngay
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="product__discription">
+                <div class="product__discription-header">
+                    <h2> Mô tả sản phẩm</h2>
+                </div>
+                <div class="product__discription-body">
+                    @Html.Raw(Model.Content)
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

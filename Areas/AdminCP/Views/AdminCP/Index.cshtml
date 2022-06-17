@@ -1,0 +1,13 @@
+@using App.Menu
+@inject AdminSidebarService _AdminSidebarService
+
+@{
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Admin Control Panel";
+}
+
+<p>Quan Tri Web Site</p>
+@section Sidebar
+{
+@Html.Raw(_AdminSidebarService.renderHtml())
+}
