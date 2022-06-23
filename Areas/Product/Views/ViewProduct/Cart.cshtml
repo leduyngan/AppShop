@@ -15,7 +15,8 @@
             <div class="row cart__title ">
                 <div class="col l-40-">
                     <div class="cart__title-">
-                        <div class="cart__title-checkbox_padding"> <input class="cart__title-detail-checkbox"
+                        <div class="cart__title-checkbox_padding"> <input
+                            class="cart__title-detail-checkbox cart__title-detail-checkbox-all cart__title-detail-checkbox-all-top"
                             type="checkbox" id="" name="" value=""></div>
                         <div>Sản Phẩm</div>
                     </div>
@@ -42,20 +43,17 @@
                     <div class="cart__list__item">
                         @foreach (var cartitem in Model)
                         {
-
                             var thanhtien = cartitem.quantity * cartitem.product.Price;
-
-
-
                             total += thanhtien;
-
-                            <div class="cart-item">
+                            <div class="cart-item" id="@cartitem.product.ProductId">
                                 <div class="row">
                                     <div class="col l-40-">
                                         <div class="cart__list__item__">
                                             <div class="cart__list__item__input">
-                                                <input class="cart__title-detail-checkbox" type="checkbox" id="" name=""
-                                            value="">
+                                                <input id="CartCheckbox-@cartitem.product.ProductId"
+                                            data-productId="@cartitem.product.ProductId"
+                                            class="cart__title-detail-checkbox" type="checkbox" name="Cartcheckbox-Item"
+                                            checked="@cartitem.IsChecked" value="">
                                             </div>
                                             <div class="cart__list-img">
                                                 @if (cartitem.photo.Any())
@@ -87,29 +85,33 @@
                                                     <div class="cart__list-detail-amount">
                                                         <div class="info_other-list-change-card">
                                                             <div class="info_other-list-border">
-                                                                <button class="info_other-list-btn">
+                                                                <button id="minus-@cartitem.product.ProductId"
+                                                            class="info_other-list-btn info_other-list-btn-detail-minus">
                                                                     <i class="fa-solid fa-minus"></i>
                                                                 </button>
                                                             </div>
+
                                                             <div class="info_other-list-border">
-                                                                <input type="text" class="info_other-list-numberInCard"
-                                                            placeholder="1">
+                                                                <input id="amountItem-@cartitem.product.ProductId" type="number"
+                                                            class="info_other-list-numberInCard"
+                                                            value="@cartitem.quantity">
                                                             </div>
                                                             <div class="info_other-list-border">
-
-                                                                <button class="info_other-list-btn"
+                                                                <button id="plus-@cartitem.product.ProductId"
+                                                            class="info_other-list-btn info_other-list-btn-detail-plus"
                                                             data-productid="@cartitem.product.ProductId">
                                                                     <i class="fa-solid fa-plus"></i>
                                                                 </button>
-
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col l-3">
                                                 <div class="cart__list-detail">
-                                                    <div class="cart__list-detail-money">@(thanhtien.ToString("n0"))</div>
+                                                    <div id="moneyItem-@cartitem.product.ProductId"
+                                                class="cart__list-detail-money">@(thanhtien.ToString("n0"))</div>
                                                 </div>
                                             </div>
                                             <div class="col l-3 ">
@@ -146,7 +148,9 @@
                 <div class="cart__pay">
                     <div class="cart__pay__select">
                         <div class="cart__pay__select-checkbox">
-                            <input class="cart__title-detail-checkbox" type="checkbox" id="" name="" value="">
+                            <input
+                            class="cart__title-detail-checkbox cart__title-detail-checkbox-all cart__title-detail-checkbox-all-bottom"
+                            type="checkbox" id="" name="" value="">
                         </div>
                         <div class="cart__pay__select-all">
                             Chọn tất cả (<span>1</span>)
@@ -160,7 +164,8 @@
                             Tổng thanh toán(<span>1</span> sản phẩm):
                         </div>
                         <div class="cart__pay__checkout-money">
-                            @(total.ToString("n0"))<span>₫</span>
+                            0<span>₫</span>
+                            @* @(total.ToString("n0"))<span>₫</span> *@
                         </div>
                         <div class="cart__pay__checkout-buy">
                             <button>Mua Hàng</button>
@@ -172,81 +177,173 @@
         </div>
     </div>
 
-
-
-    @* <table class="table">
-        <tr>
-        <th>#</th>
-        <th>Sản phẩm</th>
-        <th>Giá</th>
-        <th>Số lượng</th>
-        <th>Thành tiền</th>
-        <th></th>
-        </tr>
-        @foreach (var cartitem in Model)
-        {
-        var thanhtien = cartitem.quantity * cartitem.product.Price;
-        total += thanhtien;
-
-        <tr>
-        <td>@(stt++)</td>
-        <td>@cartitem.product.Title</td>
-        <td>@(cartitem.product.Price.ToString("n0"))</td>
-        <td><input asp-for="@cartitem.quantity" id="@($"quantity-{cartitem.product.ProductId}")" /></td>
-        <td>@(thanhtien.ToString("n0"))</td>
-        <td>
-        <button class="btn btn-success updatecartitem" data-productid="@cartitem.product.ProductId">Cập
-        nhật</button>
-        <a asp-route="removecart" asp-route-productid="@cartitem.product.ProductId" class="btn btn-danger">Xóa</a>
-        </td>
-        </tr>
-        }
-        <tr>
-        <td colspan="4" class="text-right">Tổng tiền</td>
-        <td>@(total.ToString("n0"))</td>
-        <td></td>
-        </tr>
-        </table>
-
-        <a asp-controller="ViewProduct" asp-action="Checkout" class="btn btn-success">Gửi đơn hàng</a>
-    *@
-
-
-
-
-
-
-
-
-
-
-
-
-    @* @section Scripts {
-        <script>
-        $(document).ready(function () {
-        $(".updatecartitem").click(function (event) {
-        event.preventDefault();
-        var productid = $(this).attr("data-productid");
-        var quantity = $("#quantity-" + productid).val();
-        $.ajax({
-        type: "POST",
-        url: "@Url.RouteUrl("updatecart")",
-        data: {
-        productid: productid,
-        quantity: quantity
-        },
-        success: function (result) {
-        window.location.href = "@Url.RouteUrl("cart")";
-        }
-        });
-        });
-        });
-        </script>
-        } *@
-
 }
 else
 {
     <p class="alert alert-danger">Giỏ hàng trống</p>
 }
+<script>
+    const checkAllTop = document.querySelector('.cart__title-detail-checkbox-all-top')
+    const checkAllBottom = document.querySelector('.cart__title-detail-checkbox-all-bottom')
+    checkAllTop.addEventListener('click', function (event) {
+        var checkedBox = document.querySelectorAll('input[name=Cartcheckbox-Item]');
+        if (checkAllTop.checked) {
+            Updatestatuscart(true)
+        }
+        else {
+            Updatestatuscart(false)
+        }
+        checkedBox.forEach(function (item, value) {
+            if (checkAllTop.checked) {
+                item.checked = true;
+                checkAllBottom.checked = true
+            }
+            else {
+                item.checked = false;
+                checkAllBottom.checked = false
+            }
+        })
+        totalPriceCart();
+    });
+    checkAllBottom.addEventListener('click', function (event) {
+        var checkedBox = document.querySelectorAll('input[name=Cartcheckbox-Item]');
+        if (checkAllTop.checked) {
+            Updatestatuscart(true)
+        }
+        else {
+            Updatestatuscart(false)
+        }
+        checkedBox.forEach(function (item, value) {
+            if (checkAllBottom.checked) {
+                item.checked = true;
+                checkAllTop.checked = true
+            }
+            else {
+                item.checked = false;
+                checkAllTop.checked = false
+            }
+        })
+        totalPriceCart();
+    });
+
+    totalPriceCart();
+    $(document).ready(function () {
+        $.ajax({
+            url: "/GetCartItem",
+            type: 'GET',
+            success: function (result) {
+                result.forEach(listItem);
+                function listItem(item, index) {
+                    var minusItem = $('#minus-' + item.product.productId);
+                    var plusItem = $('#plus-' + item.product.productId)
+                    var amountItem = $('#amountItem-' + item.product.productId);
+                    var checkboxItem = $('#CartCheckbox-' + item.product.productId)
+
+                    minusItem.click(function () {
+                        if (parseInt(amountItem.val()) > 1) {
+                            var number = parseInt(amountItem.val()) - 1;
+                            amountItem.val(number).trigger('change');
+                            if (checkboxItem.is(':checked')) {
+                                updateCart(item.product.productId, number, true);
+                                totalPriceCart();
+                            }
+                            else {
+                                updateCart(item.product.productId, number, false);
+                            }
+                        }
+                    })
+                    plusItem.click(function () {
+                        var number = parseInt(amountItem.val()) + 1;
+                        amountItem.val(number).trigger('change');
+                        if (checkboxItem.is(':checked')) {
+                            updateCart(item.product.productId, number, true);
+                            totalPriceCart();
+                        }
+                        else {
+                            updateCart(item.product.productId, number, false);
+                        }
+                    })
+                    // thay đổi giá số tiền tương ứng với số lượng sản phẩm
+                    amountItem.change(function () {
+                        var moneyItem = $('#moneyItem-' + item.product.productId)
+                        var amountItemVal = parseInt(amountItem.val());
+                        var moneyItemVal = parseInt(item.product.price);
+                        var sumMoneyItemVal = amountItemVal * moneyItemVal;
+                        moneyItem.html(addCommas(sumMoneyItemVal));
+                        if (checkboxItem.is(':checked')) {
+                            totalPriceCart();
+                        }
+                    });
+                    checkboxItem.click(function () {
+                        totalPriceCart();
+                        var number = parseInt(amountItem.val());
+                        var id = item.product.productId;
+                        if (checkboxItem.is(':checked')) {
+                            updateCart(id, number, true);
+                        } else {
+                            updateCart(id, number, false);
+                        }
+                    })
+                }
+            }
+        });
+    });
+
+
+    function totalPriceCart() {
+        var checkedBox = document.querySelectorAll('input[name=Cartcheckbox-Item]:checked');
+        var totalPrice = 0;
+        var totalView = $('.cart__pay__checkout-money');
+        checkedBox.forEach(function (item, value) {
+            var checkedProductId = item.getAttribute("data-productId");
+            var totalPriceItemStr = $('#moneyItem-' + checkedProductId);
+            var totalPriceItem = removeCommas(totalPriceItemStr.text());
+            totalPrice += totalPriceItem;
+        })
+        totalView.text(totalPrice + '₫');
+
+    }
+    // cập nhật số lượng cart vào section
+    function updateCart(_productid, _quantity, _isChecked) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.RouteUrl("updatecart")",
+            data: {
+                productid: _productid,
+                quantity: _quantity,
+                isChecked: _isChecked
+            },
+            success: function (result) {
+                $(".cardLayout").load("/ReloadCard");
+            }
+        });
+    };
+    function Updatestatuscart(_isChecked) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.RouteUrl("Updatestatuscart")",
+            data: {
+                isChecked: _isChecked,
+            },
+            success: function (result) {
+    @* $(".cardLayout").load("/ReloadCard"); *@
+            }
+        });
+    };
+    function addCommas(nStr) {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+    function removeCommas(numberString) {
+        var num = numberString.replace(/\D/g, '');
+        var num2 = parseInt(num);
+        return num2;
+    }
+</script>

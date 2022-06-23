@@ -171,16 +171,17 @@
                             <div class="info_other-list">
                                 <div class="info_other-list-change-card">
                                     <div class="info_other-list-border">
-                                        <button class="info_other-list-btn">
+                                        <button class="info_other-list-btn info_other-list-btn-detail-minus">
                                             <i class="fa-solid fa-minus"></i>
                                         </button>
                                     </div>
 
                                     <div class="info_other-list-border">
-                                        <input type="text" class="info_other-list-numberInCard" placeholder="1">
+                                        <input id="detail-number-item" type="number"
+                                            class="info_other-list-numberInCard" value="1">
                                     </div>
                                     <div class="info_other-list-border">
-                                        <button class="info_other-list-btn">
+                                        <button class="info_other-list-btn info_other-list-btn-detail-plus">
                                             <i class="fa-solid fa-plus"></i>
                                         </button>
                                     </div>
@@ -198,11 +199,10 @@
 
                     <div class="info__buy">
                         <div class="info__buy-addToCart-hover">
-                            <button class="info__buy-addToCart">
+                            <button id="detail-add-to-cart" class="info__buy-addToCart"
+                                data-productid="@Model.ProductId">
                                 <i class="fa-solid fa-cart-plus"></i>
-                                <a asp-action="AddToCart" asp-route-productid="@Model.ProductId"
-                                    class="btn btn-danger">Thêm vào giỏ hàng</a>
-
+                                Thêm vào giỏ hàng
                             </button>
                         </div>
                         <div class="info__buy-addToCart-hover">
@@ -229,3 +229,56 @@
         </div>
     </div>
 </div>
+
+<div class="detail__modal">
+    <span class="detail__modal-icon"><i class="fa-solid fa-circle-check"></i></span>
+    <span class="detail__modal-content">Sản phẩm đã được thêm vào giỏ hàng</span>
+</div>
+
+
+
+<script>
+    var plusItem = document.querySelector('.info_other-list-btn-detail-plus');
+    var minusItem = document.querySelector('.info_other-list-btn-detail-minus');
+    var cartItem = document.querySelector('.header__cart-notice');
+    var numberItem = document.querySelector('#detail-number-item');
+    var addToCart = document.querySelector('#detail-add-to-cart');
+
+    var productid = addToCart.dataset.productid;
+    var item = numberItem.value;
+    var eventChange = new Event('change');
+
+    plusItem.onclick = function () {
+        item++;
+        numberItem.value = item;
+        numberItem.dispatchEvent(eventChange);
+    }
+    minusItem.onclick = function () {
+        if (item > 1) {
+            item--;
+            numberItem.value = item;
+            numberItem.dispatchEvent(eventChange);
+        }
+    }
+
+    $("#detail-add-to-cart").click(function (event) {
+        event.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "@Url.RouteUrl("updatecart")",
+            data: {
+                productid: productid,
+                quantity: item
+            },
+            success: function (result) {
+
+                cartItem.textContent = result;
+                document.querySelector('.detail__modal').style.display = 'flex';
+                setTimeout(function () {
+                    document.querySelector('.detail__modal').style.display = 'none';
+                }, 4000);
+                $(".cardLayout").load("/ReloadCard");
+            }
+        });
+    });
+</script>

@@ -150,7 +150,7 @@ namespace App.Areas.Blog.Controllers
             return categories;
 
         }
-        /// Thêm sản phẩm vào cart
+        // Thêm sản phẩm vào cart
         [Route("addcart/{productid:int}", Name = "addcart")]
         public IActionResult AddToCart([FromRoute] int productid)
         {
@@ -160,6 +160,7 @@ namespace App.Areas.Blog.Controllers
                 .FirstOrDefault();
             var product = new ProductModel
             {
+                ProductId = productWithPhoto.ProductId,
                 Title = productWithPhoto.Title,
                 Description = productWithPhoto.Description,
                 Slug = productWithPhoto.Slug,
@@ -193,7 +194,62 @@ namespace App.Areas.Blog.Controllers
         [Route("/cart", Name = "cart")]
         public IActionResult Cart()
         {
-            return View(_cartService.GetCartItems());
+            var cart = _cartService.GetCartItems();
+            return View(cart);
+        }
+        [Route("/updatestatuscart", Name = "updatestatuscart")]
+        [HttpPost]
+        public IActionResult Updatestatuscart([FromForm] bool isChecked)
+        {
+            var carts = _cartService.GetCartItems();
+            foreach (var cart in carts)
+            {
+                cart.IsChecked = isChecked;
+                _cartService.SaveCartSession(carts);
+            }
+            var carsdft = _cartService.GetCartItems();
+            return Ok();
+        }
+        /// Cập nhật
+        [Route("/updatecart", Name = "updatecart")]
+        [HttpPost]
+        public IActionResult UpdateCart([FromForm] int productid, [FromForm] int quantity, [FromForm] bool isChecked)
+        {
+            var productWithPhoto = _context.Products
+                .Where(p => p.ProductId == productid)
+                .Include(p => p.Photos)
+                .FirstOrDefault();
+            var product = new ProductModel
+            {
+                ProductId = productWithPhoto.ProductId,
+                Title = productWithPhoto.Title,
+                Description = productWithPhoto.Description,
+                Slug = productWithPhoto.Slug,
+                Content = productWithPhoto.Content,
+                Price = productWithPhoto.Price
+            };
+
+            var productPhoto = productWithPhoto.Photos.FirstOrDefault();
+
+            // Cập nhật Cart thay đổi số lượng quantity ...
+            var cart = _cartService.GetCartItems();
+            var cartNumber = cart.Count();
+            var cartitem = cart.Find(p => p.product.ProductId == productid);
+            if (cartitem != null)
+            {
+                cartitem.quantity = quantity;
+                cartitem.IsChecked = isChecked;
+            }
+            else
+            {
+                //  Thêm mới
+                cart.Add(new CartItem() { quantity = quantity, product = product, photo = productPhoto.FileName.ToString(), IsChecked = isChecked });
+                cartNumber++;
+            }
+            _cartService.SaveCartSession(cart);
+            var carsdft = _cartService.GetCartItems();
+            // Trả về mã thành công (không có nội dung gì - chỉ để Ajax gọi)
+            return Content(cartNumber.ToString());
         }
         /// xóa item trong cart
         [Route("/removecart/{productid:int}", Name = "removecart")]
@@ -210,23 +266,7 @@ namespace App.Areas.Blog.Controllers
             _cartService.SaveCartSession(cart);
             return RedirectToAction(nameof(Cart));
         }
-        /// Cập nhật
-        [Route("/updatecart", Name = "updatecart")]
-        [HttpPost]
-        public IActionResult UpdateCart([FromForm] int productid, [FromForm] int quantity)
-        {
-            // Cập nhật Cart thay đổi số lượng quantity ...
-            var cart = _cartService.GetCartItems();
-            var cartitem = cart.Find(p => p.product.ProductId == productid);
-            if (cartitem != null)
-            {
-                // Đã tồn tại, tăng thêm 1
-                cartitem.quantity = quantity;
-            }
-            _cartService.SaveCartSession(cart);
-            // Trả về mã thành công (không có nội dung gì - chỉ để Ajax gọi)
-            return Ok();
-        }
+
         [Route("/Checkout")]
         public IActionResult Checkout()
         {
@@ -234,6 +274,16 @@ namespace App.Areas.Blog.Controllers
             _cartService.ClearCart();
             return Content("Đã gửi đơn hàng");
         }
-
+        [Route("/ReloadCard")]
+        public ActionResult ReloadCard()
+        {
+            return PartialView("_CartShopPartial");
+        }
+        [Route("/GetCartItem")]
+        public List<CartItem> GetCartItem()
+        {
+            var cart = _cartService.GetCartItems();
+            return cart;
+        }
     }
 }
