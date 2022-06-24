@@ -8,6 +8,9 @@
 @if (Model.Count > 0)
 {
     decimal total = 0;
+    var itemChecked = from a in Model
+                      where (a.IsChecked == true)
+                      select a;
 
 
     <div class="app__container padding-bottom app__content">
@@ -55,21 +58,24 @@
                                             class="cart__title-detail-checkbox" type="checkbox" name="Cartcheckbox-Item"
                                             checked="@cartitem.IsChecked" value="">
                                             </div>
-                                            <div class="cart__list-img">
-                                                @if (cartitem.photo.Any())
-                                                {
+                                            <a asp-controller="ViewProduct" asp-action="Detail"
+                                        asp-route-productslug="@cartitem.product.Slug">
+                                                <div class="cart__list-img">
+                                                    @if (cartitem.photo.Any())
+                                                    {
+                                                        <div class="cart__list-item-img"
+                                                style="background-image: url('/contents/Products/@cartitem.photo');">
+                                                        </div>
+                                                    }
 
-                                                    <div class="cart__list-item-img"
-                                            style="background-image: url('/contents/Products/@cartitem.photo');">
+                                                    <div class="cart__list-img-a">
+                                                        <a asp-controller="ViewProduct" asp-action="Detail"
+                                                    asp-route-productslug="@cartitem.product.Slug">@cartitem.product.Title</a>
+
+
                                                     </div>
-                                                }
-
-                                                <div class="cart__list-img-a">
-                                                    <a href="">
-                                                        @cartitem.product.Title
-                                                    </a>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="col l-60-">
@@ -153,15 +159,15 @@
                             type="checkbox" id="" name="" value="">
                         </div>
                         <div class="cart__pay__select-all">
-                            Chọn tất cả (<span>1</span>)
+                            Chọn tất cả (<span>@itemChecked.Count()</span>)
                         </div>
                         <div class="cart__pay__select-delete">
-                            <button>Xóa</button>
+                            @* <button>Xóa</button> *@
                         </div>
                     </div>
                     <div class="cart__pay__checkout">
                         <div class="cart__pay__checkout-total">
-                            Tổng thanh toán(<span>1</span> sản phẩm):
+                            Tổng thanh toán(<span>@itemChecked.Count()</span> sản phẩm):
                         </div>
                         <div class="cart__pay__checkout-money">
                             0<span>₫</span>
@@ -185,6 +191,10 @@ else
 <script>
     const checkAllTop = document.querySelector('.cart__title-detail-checkbox-all-top')
     const checkAllBottom = document.querySelector('.cart__title-detail-checkbox-all-bottom')
+    const buy = document.querySelector('.cart__pay__checkout-buy button')
+    buy.onclick = function () {
+        alert('Đã gửi đơn hàng thành công!');
+    }
     checkAllTop.addEventListener('click', function (event) {
         var checkedBox = document.querySelectorAll('input[name=Cartcheckbox-Item]');
         if (checkAllTop.checked) {
@@ -204,10 +214,11 @@ else
             }
         })
         totalPriceCart();
+        LoadTotalItem()
     });
     checkAllBottom.addEventListener('click', function (event) {
         var checkedBox = document.querySelectorAll('input[name=Cartcheckbox-Item]');
-        if (checkAllTop.checked) {
+        if (checkAllBottom.checked) {
             Updatestatuscart(true)
         }
         else {
@@ -224,6 +235,7 @@ else
             }
         })
         totalPriceCart();
+        LoadTotalItem()
     });
 
     totalPriceCart();
@@ -283,6 +295,10 @@ else
                         } else {
                             updateCart(id, number, false);
                         }
+                        LoadTotalItem();
+                        checkAllTop.checked = false;
+                        checkAllBottom.checked = false;
+
                     })
                 }
             }
@@ -300,7 +316,7 @@ else
             var totalPriceItem = removeCommas(totalPriceItemStr.text());
             totalPrice += totalPriceItem;
         })
-        totalView.text(totalPrice + '₫');
+        totalView.text(addCommas(totalPrice) + '₫');
 
     }
     // cập nhật số lượng cart vào section
@@ -326,10 +342,17 @@ else
                 isChecked: _isChecked,
             },
             success: function (result) {
-    @* $(".cardLayout").load("/ReloadCard"); *@
             }
         });
     };
+    function LoadTotalItem() {
+        var checkedBox = document.querySelectorAll('input[name=Cartcheckbox-Item]:checked');
+        var totalLeft = document.querySelector('.cart__pay__select-all span');
+        var totalRight = document.querySelector('.cart__pay__checkout-total span');
+        totalLeft.innerHTML = checkedBox.length;
+        totalRight.innerHTML = checkedBox.length;
+
+    }
     function addCommas(nStr) {
         nStr += '';
         x = nStr.split('.');

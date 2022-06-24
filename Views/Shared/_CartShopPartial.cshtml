@@ -40,16 +40,14 @@
                                             <div class="header_cart-item-price-wrap">
                                                 <span class="header__cart-item-price">@item.product.Price</span>
                                                 <span class="header__cart-item-multiply">x</span>
-                                                <span class="header__cart-item-quantity">1</span>
+                                                <span class="header__cart-item-quantity">@item.quantity</span>
                                             </div>
                                         </div>
                                         <div class="header__cart-item-body">
                                             <span class="header__cart-item-description header__cart-item-description-rownumber">
                                                 @Html.Raw(item.product.Description)
                                             </span>
-                                            <span class="header__cart-item-remove">
-                                                Xóa
-                                            </span>
+
                                         </div>
                                     </div>
                                 </li>
