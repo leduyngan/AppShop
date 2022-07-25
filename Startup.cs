@@ -103,8 +103,8 @@ namespace App
             });
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/login";
-                options.LogoutPath = "/logout";
+                options.LoginPath = "/Account/login";
+                options.LogoutPath = "/Account/logout";
                 options.AccessDeniedPath = "/khongduoctruycap.html";
             });
             services.AddAuthentication()
@@ -171,10 +171,13 @@ namespace App
                 ),
                 RequestPath = "/contents"
             });
-            app.UseSession();
+
             app.AddStatusCodePage();
 
             app.UseRouting();
+
+            app.UseSession();
+
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -10,9 +10,11 @@ using App.Helper;
 using App.Models.Product;
 using App.Areas.Product.Models;
 using App.Areas.Srevice;
+using Microsoft.AspNetCore.Authorization;
 
 namespace App.Areas.Blog.Controllers
 {
+
     [Area("Product")]
     public class ViewProductController : Controller
     {
@@ -113,6 +115,7 @@ namespace App.Areas.Blog.Controllers
             }
             return cateChilIDs;
         }
+
         [Route("/product/{productslug}.html")]
         public IActionResult Detail(string productslug)
         {
@@ -150,7 +153,10 @@ namespace App.Areas.Blog.Controllers
             return categories;
 
         }
+
+
         // Thêm sản phẩm vào cart
+        [Authorize]
         [Route("addcart/{productid:int}", Name = "addcart")]
         public IActionResult AddToCart([FromRoute] int productid)
         {
@@ -191,6 +197,7 @@ namespace App.Areas.Blog.Controllers
             return RedirectToAction(nameof(Cart));
         }
         // Hiện thị giỏ hàng
+        [Authorize]
         [Route("/cart", Name = "cart")]
         public IActionResult Cart()
         {
@@ -211,10 +218,17 @@ namespace App.Areas.Blog.Controllers
             return Ok();
         }
         /// Cập nhật
+
         [Route("/updatecart", Name = "updatecart")]
         [HttpPost]
         public IActionResult UpdateCart([FromForm] int productid, [FromForm] int quantity, [FromForm] bool isChecked)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                Redirect("https://localhost:5001/Account/login");
+            }
+
+
             var productWithPhoto = _context.Products
                 .Where(p => p.ProductId == productid)
                 .Include(p => p.Photos)
