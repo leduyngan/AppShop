@@ -7,7 +7,7 @@
 }
 
 <partial name="_StatusMessage" />
-<h4>@ViewData["Title"]</h4>
+<h4 class="account-manage-title">@ViewData["Title"]</h4>
 <div class="alert alert-warning" role="alert">
     <p>
         <span class="glyphicon glyphicon-warning-sign"></span>
@@ -24,6 +24,6 @@
 </div>
 <div>
     <form method="post" class="form-group" asp-action="GenerateRecoveryCodesOnPost">
-        <button class="btn btn-danger" type="submit">Generate Recovery Codes</button>
+        <button class="btn btn-danger account-manage-btn" type="submit">Generate Recovery Codes</button>
     </form>
 </div>

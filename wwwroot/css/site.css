@@ -1,7 +1,7 @@
-body {
+/* body {
   background: #fff;
   color: #1d1d1f;
-}
+} */
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -10,19 +10,19 @@ html {
   min-height: 100%;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
+    /* body {
+      Margin bottom by footer height 
+      margin-bottom: 60px;
+    } */
 
-.footer {
+/* .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
-  /* Vertically center the text there */
-}
+  
+} */
 
 .app-navbar {
   background: #122153;

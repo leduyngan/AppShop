@@ -6,6 +6,8 @@
 }
 @if (resultAuthorize.Succeeded)
 {
-    <a class="nav-link text-light" asp-action="index" asp-controller="AdminCP" asp-area="AdminCP"><i class="fas fa-cog"></i>
-        Quản trị</a>
+    <li class="header__navbar-item ">
+        <a class="header__navbar-item-link" asp-action="index" asp-controller="AdminCP" asp-area="AdminCP">
+            <i class="header__navbar-icon fas fa-cog"></i> Quản trị</a>
+    </li>
 }

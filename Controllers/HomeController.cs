@@ -25,7 +25,8 @@ namespace App.Controllers
         public IActionResult Index(StatusMessage mesage = null)
         {
             ViewData["StatusMessage"] = mesage.Message;
-            return View();
+             return Redirect("/product") ;
+            // return View();
         }
 
         public IActionResult Privacy()

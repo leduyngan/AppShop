@@ -417,8 +417,48 @@ namespace App.Areas.Product.Controllers
                 });
                 await _context.SaveChangesAsync();
 
+            
             }
             return Ok();
         }
+        public class UploadOneFile1
+        {
+            [Required(ErrorMessage = "Phải chọn file upload")]
+            [DataType(DataType.Upload)]
+            [Display(Name = "Chọn file upload")]
+            public IFormFile[] FileUploads { get; set; }
+        }
+
+        // [HttpPost]
+        // public async Task<IActionResult> UploadPhotoApi(int id, [Bind("FileUploads")] UploadOneFile1 model)
+        // {
+        //     var product = _context.Products.Where(p => p.ProductId == id)
+        //                                 .Include(p => p.Photos) 
+        //                                 .FirstOrDefault();
+        //     if (product == null)
+        //     {
+        //         return NotFound("Không có sản phẩm");
+        //     }
+
+        //     // if (model != null)
+        //     // {
+        //     //     var file1 = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + Path.GetExtension(model.FileUploads.FileName);
+        //     //     var file = Path.Combine("Uploads", "Products", file1);
+        //     //     using (var filestream = new FileStream(file, FileMode.Create))
+        //     //     {
+        //     //         await model.FileUploads.CopyToAsync(filestream);
+        //     //     }
+
+        //     //     _context.Add(new ProductPhoto()
+        //     //     {
+        //     //         ProductID = product.ProductId,
+        //     //         FileName = file1
+        //     //     });
+        //     //     await _context.SaveChangesAsync();
+
+            
+        //     // }
+        //     return Ok();
+        // }
     }
 }

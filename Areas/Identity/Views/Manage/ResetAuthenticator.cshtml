@@ -6,7 +6,7 @@
 }
 
 <partial name="_StatusMessage" />
-<h4>@ViewData["Title"]</h4>
+<h4 class="account-manage-title">@ViewData["Title"]</h4>
 <div class="alert alert-warning" role="alert">
     <p>
         <span class="glyphicon glyphicon-warning-sign"></span>
@@ -20,6 +20,7 @@
 </div>
 <div>
     <form id="reset-authenticator-form" asp-action="ResetAuthenticatorOnPost" method="post" class="form-group">
-        <button id="reset-authenticator-button" class="btn btn-danger" type="submit">Reset authenticator key</button>
+        <button id="reset-authenticator-button account-manage-btn" class="btn btn-danger" type="submit">Reset
+            authenticator key</button>
     </form>
 </div>

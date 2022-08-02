@@ -7,7 +7,7 @@
 }
 
 <partial name="_StatusMessage" />
-<h4>@ViewData["Title"]</h4>
+<h4 class="account-manage-title">@ViewData["Title"]</h4>
 <div>
     <p>To use an authenticator app go through the following steps:</p>
     <ol class="list">
@@ -42,10 +42,11 @@
                     <form id="send-code" method="post">
                         <div class="form-group">
                             <label asp-for="@Model.Code" class="control-label">Verification Code</label>
-                            <input asp-for="@Model.Code" class="form-control" autocomplete="off" />
+                            <input asp-for="@Model.Code" class="form-control account-manage-input-form"
+                                autocomplete="off" />
                             <span asp-validation-for="@Model.Code" class="text-danger"></span>
                         </div>
-                        <button type="submit" class="btn btn-primary">Verify</button>
+                        <button type="submit" class="btn btn-primary account-manage-btn">Verify</button>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     </form>
                 </div>

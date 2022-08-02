@@ -73,7 +73,7 @@ namespace App.Areas.Blog.Controllers
             }
 
             int totalProducts = products.Count();
-            if (pageSize <= 0) pageSize = 12;
+            if (pageSize <= 0) pageSize = 20;
             int countPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 
             if (currentPage > countPages) currentPage = countPages;

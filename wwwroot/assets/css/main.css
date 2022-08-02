@@ -7,7 +7,16 @@
     background-image: linear-gradient(0, #fe6433, #f53e2d);
 
 }
-
+.header-height{
+    height: 50px;
+}
+.body-height{
+    height: 750px;
+    display: block;
+}
+.header__logo-sub{
+    width: 135px;
+}
 .header-top {
     z-index: 12;
 }
@@ -54,6 +63,8 @@
     margin-left: 4px;
     font-size: 1.4rem;
     font-weight: 400;
+    text-align: none;
+    text-decoration: none;
 }
 
 .header__navbar-user-img {
@@ -114,7 +125,15 @@
 .header__navbar-user-item a:hover {
     background-color: #fafafa;
 }
-
+.header__navbar-user-item-logout{
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.4rem;
+    display: block;
+    padding: 8px 16px;
+    z-index: 2;
+}
 
 
 .header__navbar-mobile-user {
@@ -1770,6 +1789,7 @@ i.home-product-item__like-icon-fill {
     font-size: 1.4rem;
     text-transform: uppercase;
     color: var(--text-color);
+
 }
 
 .footer-list {
@@ -1843,4 +1863,7 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+.account__manage{
+    font-size: 1.8rem;
 }

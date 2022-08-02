@@ -8,7 +8,7 @@
 }
 
 
-<h4>@ViewData["Title"]</h4>
+<h4 class="account-manage-title">@ViewData["Title"]</h4>
 
 <partial name="_StatusMessage" model=@ViewData["StatusMessage"] />
 <div class="row">
@@ -17,11 +17,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="@Model.profile.UserName"></label>
-                <input asp-for="@Model.profile.UserName" class="form-control" disabled />
+                <input asp-for="@Model.profile.UserName" class="form-control account-manage-input-form" disabled />
             </div>
             <div class="form-group">
                 <label asp-for="PhoneNumber"></label>
-                <input asp-for="PhoneNumber" class="form-control" disabled />
+                <input asp-for="PhoneNumber" class="form-control account-manage-input-form" disabled />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -31,10 +31,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="@Model.profile.BirthDate"></label>
-                <input asp-for="@Model.profile.BirthDate" class="form-control" />
+                <input asp-for="@Model.profile.BirthDate" class="form-control account-manage-input-form" />
                 <span asp-validation-for="@Model.profile.BirthDate" class="text-danger"></span>
             </div>
-            <button id="update-profile-button" type="submit" class="btn btn-primary">Lưu</button>
+            <button id="update-profile-button" type="submit" class="btn btn-primary account-manage-btn">Lưu</button>
         </form>
     </div>
 </div>

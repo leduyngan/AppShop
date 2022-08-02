@@ -43,13 +43,13 @@ namespace App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDistributedMemoryCache();
-            services.AddDistributedSqlServerCache(option =>
-            {
-                option.ConnectionString = "Data Source=(local);Initial Catalog=appmvc;Persist Security Info=True;User ID=sa;Password=123456";
-                option.SchemaName = "dbo";
-                option.TableName = "Session";
-            });
+            services.AddDistributedMemoryCache();
+            // services.AddDistributedSqlServerCache(option =>
+            // {
+            //     option.ConnectionString = "Data Source=DESKTOP-JO855BL\\DBNGAN;Initial Catalog=appmvc;Persist Security Info=True;User ID=sa;Password=123456";
+            //     option.SchemaName = "dbo";
+            //     option.TableName = "Session";
+            // });
             services.AddSession(option =>
             {
                 option.Cookie.Name = "AppMvc";

@@ -25,7 +25,9 @@
             </div>
 
             <hr>
-            <input type="file" id="selectfileupload" class="collapse" onchange="AutoUploadPhoto()" />
+            @* <input type="file" id="selectfileupload" class="collapse" onchange="AutoUploadPhoto()" /> *@
+            <input type="file" id="selectfileupload" multiple="multiple" class="collapse" onchange="AutoUploadPhoto()" />
+
             <span class="btn btn-primary" onclick="ClickButtonUpload()">Uploads hình ảnh</span>
             <div id="box-photo-upload" class="d-flex flex-wrap photo-upload" data-id="@Model.ProductId">
             </div>
@@ -88,7 +90,47 @@
 
 
     function AutoUploadPhoto() {
+        
+
+        
+        var id = $("#box-photo-upload").data("id");
+
+        var sofile = document.getElementById("selectfileupload").files.length;
+        var sofile1 = document.getElementById("selectfileupload").files[0];
+
+
+
+        if (sofile == 0) return;
+        var fileData = document.getElementById("selectfileupload").files;
+
+        var fileDataArr = Object.keys(fileData).map(function (key) { return fileData[key]; });
+        fileDataArr.forEach(myFunction)
+
+        function myFunction(item, index) {
         var formData = new FormData();
+        formData.append("id", id);
+        formData.append("FileUpload", item);
+        var urlUpload = "@Url.Action("UploadPhotoApi")";
+        $.ajax({
+            data: formData,
+            cache: false,
+            url: urlUpload,
+            type: "POST",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+
+                LoadPhoto();
+            }
+        });
+}
+
+        
+    }
+
+    @* function AutoUploadPhoto() {
+        var formData = new FormData();
+
         var id = $("#box-photo-upload").data("id");
         formData.append("id", id);
 
@@ -110,7 +152,12 @@
                 LoadPhoto();
             }
         });
-    }
+    } *@
+
+
+
+
+    
     function ClickButtonUpload() {
         $("#selectfileupload").click();
     }
